@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-missions-passes',
   standalone: true,
   imports: [RouterLink],
   templateUrl: './missions-passes.component.html',
-  styleUrls: ['../../../../public/assets/Css/style3.css'],
+  styleUrls: ['./missions-passes.component.css'],
 })
-export class MissionsPassesComponent {}
+export class MissionsPassesComponent {
+  constructor(private router: Router) {}
+
+  goBack(): void {
+    this.router.navigate(['/dashboard-interimaire']);
+  }
+}

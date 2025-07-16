@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth/auth.service';
-import { RegisterModel } from '../../models/auth/register.model';
+import { AuthService, RegisterDto } from '../../services/auth/auth.service';
 
 interface RegisterFormData {
   firstName: string;
@@ -49,29 +48,59 @@ export class InscriptionComponent {
 
     this.isLoading = true;
 
-    try {
-      const registerModel: RegisterModel = {
+    try {      const registerModel: RegisterDto = {
         email: this.formData.email.trim(),
-        motDePass: this.formData.password,
-        role: 'User', // Par défaut, pourra être modifié selon les besoins
+        motDePasse: this.formData.password,
+        confirmMotDePasse: this.formData.confirmPassword,
         nom: this.formData.lastName.trim(),
         prenom: this.formData.firstName.trim(),
-        telephone: this.formData.countryCode + this.formData.phoneNumber.trim()
-      };
-
-      this.authService.register(registerModel).subscribe({
+        telephone: this.formData.countryCode + this.formData.phoneNumber.trim(),
+        adresse: '', // Vide au lieu d'undefined
+        competences: [], // Tableau vide au lieu d'undefined  
+        disponibilites: '' // Vide au lieu d'undefined
+      };      this.authService.register(registerModel).subscribe({
         next: (response) => {
-          this.showToast('Inscription réussie ! Vous pouvez maintenant vous connecter.', 'success');
-          setTimeout(() => {
-            this.router.navigate(['/connexion']);
-          }, 2000);
-        },
-        error: (error) => {
+          console.log('Inscription réussie, réponse:', response);
+          
+          // Connecter automatiquement l'utilisateur après l'inscription
+          const loginData = {
+            email: this.formData.email.trim(),
+            motDePasse: this.formData.password
+          };
+          
+          this.authService.login(loginData).subscribe({
+            next: (loginResponse) => {
+              console.log('Connexion automatique réussie:', loginResponse);
+              this.showToast('Inscription réussie ! Vous êtes maintenant connecté.', 'success');
+              setTimeout(() => {
+                this.router.navigate(['/dashboard-interimaire']);
+              }, 2000);
+            },
+            error: (loginError) => {
+              console.error('Erreur lors de la connexion automatique:', loginError);
+              this.showToast('Inscription réussie ! Veuillez vous connecter.', 'success');
+              setTimeout(() => {
+                this.router.navigate(['/connexion']);
+              }, 2000);
+            }
+          });
+        },error: (error) => {
           console.error('Erreur lors de l\'inscription:', error);
-          this.showToast(
-            error.message || 'Une erreur est survenue. Veuillez réessayer.',
-            'error'
-          );
+          let errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
+          
+          if (error.error) {
+            if (typeof error.error === 'string') {
+              errorMessage = error.error;
+            } else if (error.error.message) {
+              errorMessage = error.error.message;
+            } else if (error.error.error) {
+              errorMessage = error.error.error;
+            }
+          } else if (error.message) {
+            errorMessage = error.message;
+          }
+          
+          this.showToast(errorMessage, 'error');
         },
         complete: () => {
           this.isLoading = false;
