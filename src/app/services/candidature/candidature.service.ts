@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { environment } from '../../../environments/environment';
 
 export interface CandidatureDto {
   id: string;
@@ -30,7 +31,7 @@ export interface UpdateCandidatureStatutDto {
   providedIn: 'root'
 })
 export class CandidatureService {
-  private readonly API_URL = 'https://localhost:7134/api';
+  private readonly API_URL = environment.apiUrl;
 
   constructor(
     private http: HttpClient,

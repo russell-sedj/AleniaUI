@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export interface LoginDto {
   email: string;
@@ -85,7 +86,7 @@ export interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'https://localhost:7134/api';
+  private readonly API_URL = environment.apiUrl;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   

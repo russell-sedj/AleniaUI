@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "essai": {
+    "alenia-ui": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/essai",
+            "outputPath": "dist/alenia-ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -34,6 +34,11 @@
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": false
+              },
               "budgets": [
                 {
                   "type": "initial",
@@ -60,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "essai:build:production"
+              "buildTarget": "alenia-ui:build:production"
             },
             "development": {
-              "buildTarget": "essai:build:development"
+              "buildTarget": "alenia-ui:build:development"
             }
           },
           "defaultConfiguration": "development"

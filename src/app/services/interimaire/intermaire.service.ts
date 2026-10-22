@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Interimaire } from '../../models/interimaire.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InterimaireService {
-  private apiUrl = 'https://localhost:7134/api/Interimaire';
+  private apiUrl = `${environment.apiUrl}/Interimaire`;
 
   constructor(private http: HttpClient) {}
 
