@@ -10,6 +10,7 @@ export interface MissionDto {
   etablissementNom: string;
   etablissementTelephone: string;
   poste: string;
+  service?: string;
   adresse: string;
   description?: string;
   tauxHoraire: number;

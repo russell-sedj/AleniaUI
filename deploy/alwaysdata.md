@@ -1,4 +1,4 @@
-# Déployer Alenia sur alwaysdata — compte `test-rvss`
+# Déployer Alenia sur alwaysdata, compte `test-rvss`
 
 > **URL :** <https://test-rvss.alwaysdata.net/alenia/>
 > **Compte :** `test-rvss`, offre Free (1 Go de disque, 256 Mo de RAM)
@@ -15,12 +15,15 @@
   session locale et ouvre le tableau de bord correspondant
   (`DemoSessionService`). Aucun compte à créer, aucune requête réseau.
 - Le backend ASP.NET Core et la base MySQL ne sont **pas** déployés. Les appels
-  API de l'interface échouent silencieusement (ou affichent une notification),
-  et l'inscription réelle n'est pas disponible.
+  API sont interceptés par `src/app/interceptors/demo.interceptor.ts`, qui
+  renvoie des missions, candidatures, messages et un profil d'établissement
+  fictifs. L'intercepteur ne s'active que lorsque `window.__ALENIA_DEMO__` vaut
+  `true`, donc jamais dans l'application réelle. L'inscription réelle et les
+  écritures persistantes ne sont pas disponibles.
 
-Cette démo est donc une démonstration d'interface, pas une démo fonctionnelle
-de bout en bout. Pour une démo complète, il faudra un site .NET et une base
-MySQL sur une offre payante, ou un environnement Docker.
+Cette démo est donc une démonstration d'interface avec des données simulées,
+pas une démo fonctionnelle de bout en bout. Pour une démo complète, il faudra un
+site .NET et une base MySQL sur une offre payante, ou un environnement Docker.
 
 ## Construire
 

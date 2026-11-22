@@ -1,4 +1,4 @@
-# Alenia UI — Angular 18
+# Alenia UI : Angular 18
 
 Interface web de la plateforme **Alenia**, une application de mise en relation entre établissements de santé et professionnels intérimaires. Le frontend consomme l'API ASP.NET Core du projet [`AleniaAPI`](https://github.com/russell-sedj/AleniaAPI).
 
@@ -9,6 +9,8 @@ Interface web de la plateforme **Alenia**, une application de mise en relation e
 <https://test-rvss.alwaysdata.net/alenia/>
 
 Démo statique hébergée sur alwaysdata Free (Angular seul, sans backend). Les pages publiques et les deux tableaux de bord sont accessibles depuis les pages de connexion et d'inscription via le bloc **Démo : accès direct** : aucun compte à créer, les données sont fictives.
+
+Les tableaux de bord utilisent un intercepteur de démonstration (`src/app/interceptors/demo.interceptor.ts`) qui renvoie des missions, candidatures, messages et un profil d'établissement fictifs. Il ne s'active que dans le build alwaysdata, grâce au drapeau `window.__ALENIA_DEMO__`.
 
 Le backend ASP.NET Core et la base MySQL ne sont pas hébergés dans cette démo. Voir [`deploy/alwaysdata.md`](deploy/alwaysdata.md) pour le build et le déploiement.
 
@@ -100,4 +102,4 @@ server.ts             # serveur Express pour le SSR
 
 ## Auteur
 
-Russell Dossou-Yovo — [GitHub](https://github.com/russell-sedj)
+Russell Dossou-Yovo, [GitHub](https://github.com/russell-sedj)

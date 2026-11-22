@@ -12,9 +12,19 @@ export interface CandidatureDto {
   interimaireId: string;
   interimaireNom: string;
   interimairePrenom: string;
+  interimaireSpecialite?: string;
+  interimaireExperience?: number;
+  interimaireTelephone?: string;
+  interimaireLocalisation?: string;
+  interimaireNote?: number;
+  interimaireTarif?: number;
   statut: string;
   dateCandidature: Date;
   horairesChoisis: string[];
+  missionService?: string;
+  missionDate?: Date | string;
+  message?: string;
+  tarifPropose?: number;
 }
 
 export interface CreateCandidatureDto {

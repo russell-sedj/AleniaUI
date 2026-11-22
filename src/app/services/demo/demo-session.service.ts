@@ -22,10 +22,11 @@ const DEMO_USERS: Record<DemoRole, Record<string, string>> = {
   etablissement: {
     id: '22222222-2222-4222-8222-222222222222',
     email: 'contact@hopital-saint-antoine.fr',
-    nom: 'Hopital Saint-Antoine',
+    nom: 'Hôpital Saint-Antoine',
+    responsable: 'Dr Claire Martin',
     adresse: '184 rue du Faubourg Saint-Antoine, 75012 Paris',
     telephone: '01 49 28 20 00',
-    typeEtablissement: 'Hopital public',
+    typeEtablissement: 'Hôpital public',
     dateCreation: '2024-01-15T10:00:00Z'
   }
 };

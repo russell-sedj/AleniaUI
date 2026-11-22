@@ -419,7 +419,7 @@ export class DashboardEtablissementComponent implements OnInit {
         this.missions = missions.map(mission => ({
           id: mission.id,
           titre: mission.poste,
-          service: '', // Pas disponible dans le DTO
+          service: mission.service || '',
           specialite: mission.poste,
           dateDebut: new Date(mission.datePublication),
           dateFin: new Date(mission.datePublication),
@@ -506,22 +506,24 @@ export class DashboardEtablissementComponent implements OnInit {
                 id: candidature.interimaireId,
                 prenom: candidature.interimairePrenom,
                 nom: candidature.interimaireNom,
-                email: '', // Pas disponible dans le DTO
-                telephone: '', // Pas disponible dans le DTO
-                specialite: '', // Pas disponible dans le DTO
-                experience: 0, // Pas disponible dans le DTO
-                note: 4.5, // Valeur par défaut
-                localisation: '', // Pas disponible dans le DTO
-                disponible: true, // Valeur par défaut
-                tarif: 25, // Valeur par défaut
-                derniereConnexion: new Date() // Valeur par défaut
+                email: '',
+                telephone: candidature.interimaireTelephone || '',
+                specialite: candidature.interimaireSpecialite || '',
+                experience: candidature.interimaireExperience ?? 0,
+                note: candidature.interimaireNote ?? 4.5,
+                localisation: candidature.interimaireLocalisation || '',
+                disponible: true,
+                tarif: candidature.interimaireTarif ?? 25,
+                derniereConnexion: new Date()
               },
               mission: {
                 id: candidature.missionId,
                 titre: candidature.missionPoste,
-                service: '', // Pas disponible dans le DTO
+                service: candidature.missionService || '',
                 specialite: candidature.missionPoste,
-                dateDebut: new Date(),
+                dateDebut: candidature.missionDate
+                  ? new Date(candidature.missionDate)
+                  : new Date(),
                 dateFin: new Date(),
                 heureDebut: '',
                 heureFin: '',
@@ -534,8 +536,8 @@ export class DashboardEtablissementComponent implements OnInit {
               },
               dateCandidature: new Date(candidature.dateCandidature),
               statut: this.mapStatutToTemplate(candidature.statut),
-              message: '', // Pas disponible dans le DTO
-              tarifPropose: 25 // Valeur par défaut
+              message: candidature.message || '',
+              tarifPropose: candidature.tarifPropose ?? 25
             }));
             
             // Ajouter les candidatures de cette mission à la liste globale

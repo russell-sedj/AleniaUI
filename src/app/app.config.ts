@@ -11,6 +11,7 @@ import {
 
 import { MissionService } from './services/mission/mission.service';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { demoInterceptor } from './interceptors/demo.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(
-      withInterceptors([authInterceptor]),
+      withInterceptors([authInterceptor, demoInterceptor]),
       withInterceptorsFromDi(),
       withFetch()
     ),
