@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService, RegisterEtablissementDto } from '../../../services/auth/auth.service';
 import { IconComponent } from '../../../components/icon';
+import { DemoAccessComponent } from '../../../components/demo-access/demo-access.component';
+import { DemoSessionService } from '../../../services/demo/demo-session.service';
 
 @Component({
   selector: 'app-inscription-etablissement',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, IconComponent],
+  imports: [CommonModule, FormsModule, RouterLink, IconComponent, DemoAccessComponent],
   templateUrl: './inscription-etablissement.component.html',
   styleUrls: ['./inscription-etablissement.component.css']
 })
@@ -44,11 +46,17 @@ export class InscriptionEtablissementComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private demo: DemoSessionService
   ) {}
 
   onSubmit(form: any): void {
     if (form.valid && !this.emailExists) {
+      if (this.demo.enabled) {
+        this.demo.enter('etablissement');
+        return;
+      }
+
       this.isLoading = true;
 
       this.authService.registerEtablissement(this.formData).subscribe({

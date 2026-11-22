@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { AuthService, LoginDto } from '../../services/auth/auth.service';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationComponent } from '../../components/notification/notification.component';
+import { DemoAccessComponent } from '../../components/demo-access/demo-access.component';
+import { DemoSessionService } from '../../services/demo/demo-session.service';
 
 @Component({
   selector: 'app-connexion',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, NotificationComponent],
+  imports: [RouterLink, FormsModule, CommonModule, NotificationComponent, DemoAccessComponent],
   templateUrl: './connexion.component.html',
   styleUrl: './connexion.component.css'
 })
@@ -17,7 +19,10 @@ export class ConnexionComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private demo: DemoSessionService
+  ) {}
   loginModel: LoginDto = {
     email: '',
     motDePasse: ''
@@ -41,6 +46,11 @@ export class ConnexionComponent {
     console.log('Connexion LinkedIn demandée');
   }
   async onSubmit(form: NgForm): Promise<void> {
+    if (this.demo.enabled) {
+      this.demo.enter('interimaire');
+      return;
+    }
+
     if (form.invalid) {
       this.markFormGroupTouched(form);
       this.notificationService.error('Veuillez corriger les erreurs dans le formulaire');

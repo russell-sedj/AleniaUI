@@ -4,6 +4,14 @@ Interface web de la plateforme **Alenia**, une application de mise en relation e
 
 ![Aperçu de la page d'accueil](docs/alenia.png)
 
+## Démo en ligne
+
+<https://test-rvss.alwaysdata.net/alenia/>
+
+Démo statique hébergée sur alwaysdata Free (Angular seul, sans backend). Les pages publiques et les deux tableaux de bord sont accessibles depuis les pages de connexion et d'inscription via le bloc **Démo : accès direct** : aucun compte à créer, les données sont fictives.
+
+Le backend ASP.NET Core et la base MySQL ne sont pas hébergés dans cette démo. Voir [`deploy/alwaysdata.md`](deploy/alwaysdata.md) pour le build et le déploiement.
+
 ## Stack
 
 - **Framework** : Angular 18 (standalone components)

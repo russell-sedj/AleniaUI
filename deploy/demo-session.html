@@ -1,0 +1,13 @@
+<!-- alenia-demo-session -->
+<script>
+/*
+ * Static demo bootstrap for the alwaysdata deployment.
+ *
+ * The Angular UI normally authenticates against the .NET API, which is not
+ * deployed on the free alwaysdata plan. This flag enables the demo access
+ * panel on the login and registration pages; the sessions themselves are
+ * created by DemoSessionService only when a visitor clicks a demo profile.
+ * It is injected by deploy/build-demo.js and never used by the real app.
+ */
+window.__ALENIA_DEMO__ = true;
+</script>

@@ -6,11 +6,13 @@ import { AuthService, LoginDto } from '../../../services/auth/auth.service';
 import { IconComponent } from '../../../components/icon';
 import { NotificationService } from '../../../services/notification.service';
 import { NotificationComponent } from '../../../components/notification/notification.component';
+import { DemoAccessComponent } from '../../../components/demo-access/demo-access.component';
+import { DemoSessionService } from '../../../services/demo/demo-session.service';
 
 @Component({
   selector: 'app-login-etablissement',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, IconComponent, NotificationComponent],
+  imports: [CommonModule, FormsModule, RouterLink, IconComponent, NotificationComponent, DemoAccessComponent],
   templateUrl: './login-etablissement.component.html',
   styleUrls: ['./login-etablissement.component.css']
 })
@@ -27,10 +29,16 @@ export class LoginEtablissementComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private demo: DemoSessionService
   ) {}
 
   onSubmit(form: any): void {
+    if (this.demo.enabled) {
+      this.demo.enter('etablissement');
+      return;
+    }
+
     if (form.valid) {
       this.isLoading = true;
       this.errorMessage = '';

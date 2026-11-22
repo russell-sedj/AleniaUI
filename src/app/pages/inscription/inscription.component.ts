@@ -3,6 +3,8 @@ import { RouterLink, Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService, RegisterDto } from '../../services/auth/auth.service';
+import { DemoAccessComponent } from '../../components/demo-access/demo-access.component';
+import { DemoSessionService } from '../../services/demo/demo-session.service';
 
 interface RegisterFormData {
   firstName: string;
@@ -18,13 +20,14 @@ interface RegisterFormData {
 @Component({
   selector: 'app-inscription',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule, DemoAccessComponent],
   templateUrl: './inscription.component.html',
   styleUrl: './inscription.component.css'
 })
 export class InscriptionComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private demo = inject(DemoSessionService);
 
   formData: RegisterFormData = {
     firstName: '',
@@ -43,6 +46,11 @@ export class InscriptionComponent {
     if (form.invalid || this.formData.password !== this.formData.confirmPassword) {
       this.markFormGroupTouched(form);
       this.showToast('Veuillez corriger les erreurs dans le formulaire', 'error');
+      return;
+    }
+
+    if (this.demo.enabled) {
+      this.demo.enter('interimaire');
       return;
     }
 
